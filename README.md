@@ -119,3 +119,52 @@ git push origin master
   font-size: 2rem;
 }
 ```
+
+## Handle form submission
+* `event.preventDefault()`
+  - You still see name in the form, since we prevent the page from refreshing the form doesn't clear (it would also remove any dynamically generated elements)
+  - Even if we add a `console.log()` statement to `createTaskHandler()` and monitor the **Chrome DevTools** console here, we'll notice that the log shows up for a second and then disappears as well
+  - Depending on how fast your computer is, you may not even notice that the browser itself actually reloads the page every time you submit the form!
+  - So the code works just fine here, but the **browser is causing problems**
+  - This **legacy browser behavior** used to help webpages communicate with servers, but now JavaScript does most of that work
+  - Now that we use JavaScript to handle these types of actions, we no longer need to rely on this default browser behavior to complete the task
+    + But the browser doesn't know that, and it still wants to do what it was designed to do
+    + It's up to us to explicitly instruct the browser to not do that and we do that by using `preventDefault()`
+* `click` event listeners can lack usability features that may seem trivial but make forms feel more intuitive for some users, such as allowing both the submit `<button>` element and the `Enter` key to **submit the form**
+* Because we're targeting the entire form instead of just the button, we can't use the `click` event listener anymore
+* **NOTE** If we kept a `click` listener, then every time we clicked on the form it would run the `createTaskHandler()` function, which would lead to a bad overall user experience and inefficient form use for data collection
+* We're using a form-specific event called `submit` (also called `onsubmit` in certain documentation)
+  - This particular listener actually listens for two events within the context of the form
+    + When the user `clicks` on a `<button>` element with a `type` attribute that has a value of `"submit"`
+    + When the user press `Enter` on their keyboard (`return` on Macs)
+
+```javascript
+// <button type="submit" id="villainSubmit">
+
+var listEl = document.querySelector('#villains');
+var villainInput = document.querySelector('#villainInput');
+var villainSubmit = document.querySelector('#villainSubmit');
+
+villainSubmitClick.addEventListener('click', insertVillian);
+
+function insertVillian(event) {
+  event.preventDefault();
+  var villianListEl = document.createElement('li');
+  villainListEl.textContent = villianInput.value;
+  villainListEl.classname = 'list-group-item';
+  listEl.appendChild(villianListEl);
+}
+```
+
+## The `event` object
+* a little backstory on the browser event and JavaScript relationship
+  - The browser pays attention to everything that happens on the page
+    + If someone scrolls down the page, the browser knows exactly how far they go
+    + If someone clicks on the unused margins of a page, the browser knows
+    + All of this happens whether we create a JavaScript event listener or not
+* When we use JavaScript to listen for an event that occurs on an `HTML` element, however, the browser collects all of the information for that event and packages it into an object for us to use
+  - This is known as the `event` interface, but that's just a fancy name for a nicely packaged JavaScript object we get to use in the `event` handler function
+  - We can use this `event` object by making the function executed by the `event` have an argument to represent the `event` object
+    + Once we do that, the **browser** can fill in the data for that `event` and pass the argument into the function
+* By adding the `event` argument to the `createTaskHandler()` function, we can use the data and functionality that object holds
+  - We did that when we added `event.preventDefault();` to the handler function's code
