@@ -184,3 +184,12 @@ function insertVillian(event) {
 
 ## Gotchas
 * You need to capture the input with name attribute but it doesn't exist unless you have access to the `event` object inside the event handler function
+
+## Form validation
+* When used in a condition, empty strings and the number `0` are evaluated as **falsy** values
+* When we use the syntax `!taskNameInput`, we're checking to see if the `taskNameInput` variable is **empty** by asking if it's a `falsy` value.
+* That's what the **"not"** operator `!` is doing here
+* Because the default is to check for a `true` value, the `!` is used to check for the opposite `(false)` value.
+  - Putting an exclamation point (`!`) in front of the variable name will make the condition return true if the value evaluates to false
+    + So, this code literally says, "if either one or both of the variables are not true, then proceed,"
+    + Which is the same as "if either one or both of the variables are false, then proceed."
