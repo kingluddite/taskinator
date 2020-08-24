@@ -168,3 +168,19 @@ function insertVillian(event) {
     + Once we do that, the **browser** can fill in the data for that `event` and pass the argument into the function
 * By adding the `event` argument to the `createTaskHandler()` function, we can use the data and functionality that object holds
   - We did that when we added `event.preventDefault();` to the handler function's code
+
+## Grab an element by it's `name` attribute
+`const taskNameInput = document.querySelector("input[name='task-name']");`
+
+## console.log(taskNameInput) vs console.dir(taskNameInput)
+* The `console.log(someHtmlEL)` will display the HTML tag for that element
+* The `console.dir(someHtmlEl)` will display an object
+  - The `value` property for this element, and we'll see what we typed into the form before submitting it
+* **note** While `console.log()` can get us the information we need most of the time, we can also use `console.dir()` to make the console display data as a JavaScript object
+
+## getting and setting
+* The common verb used for retrieving or reading data from an object's property is `getting`
+* When we provide and store data in an object's property, it's called `setting` * **note** These two terms are used often in web development
+
+## Gotchas
+* You need to capture the input with name attribute but it doesn't exist unless you have access to the `event` object inside the event handler function
