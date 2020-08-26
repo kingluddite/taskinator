@@ -193,3 +193,19 @@ function insertVillian(event) {
   - Putting an exclamation point (`!`) in front of the variable name will make the condition return true if the value evaluates to false
     + So, this code literally says, "if either one or both of the variables are not true, then proceed,"
     + Which is the same as "if either one or both of the variables are false, then proceed."
+
+## custom data attributes
+* This is where `data-*` attributes come in
+* Also known as **custom data attributes**, these allow developers to store extra information about an HTML element without conflicting with any of the built-in attributes
+
+## localStorage
+* Can only save data as a string and DOM elements are difficult to convert to strings
+
+## CSS
+* You'll notice that the `<main>` element has the declaration `display: flex`, allowing it to control the distribution of its content
+* In turn, each `<section>` element has a `flex: 1` declaration to specify that they should share space evenly
+* In the CSS media query, the `<section>` elements' `flex-basis` is set to `100%`, which defines a new width that takes up all available space (Thus, the elements become stacked)
+
+## Testing code
+* Any function that you create in the global scope can be accessed by the Chrome DevTools console
+* This is a great way to test if functions are working rather than trying to find a place in your code to call it
