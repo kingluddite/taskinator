@@ -209,3 +209,58 @@ function insertVillian(event) {
 ## Testing code
 * Any function that you create in the global scope can be accessed by the Chrome DevTools console
 * This is a great way to test if functions are working rather than trying to find a place in your code to call it
+
+## Event delegation
+### Why necessary?
+* If we want to delete an element
+
+```javascript
+var allButtonEls = document.querySelector(".delete-btn");
+allButtonEls.addEventListener("click", myFunction);
+```
+
+* But the `Delete` buttons don't exist when the page first loads, so this would give us an error :(
+* We could add individual event listeners to the `Delete` buttons as we make them
+
+```javascript
+var deleteButtonEl = document.createElement("button");
+deleteButtonEl.addEventListener("click", myFunction);
+```
+
+* Bad
+  - This might make our code harder to follow
+  - And the number of event listeners we would be creating could lead to **memory leaks** and **performance issues** down the road
+
+### event delegation to the rescue!
+* With event delegation, we can set up the `click` event listener on a **parent** element and then, through that single event listener, determine which `child` elements were **clicked**
+* **note** `Clicks` in JavaScript are a funny thing
+  - If an element that has `parent` elements is **clicked**, the click event `bubbles`, (or travels), upwards to its **parents**
+  - We can stop bubbling with `event.stopPropagation()`
+
+```html
+<div onclick="alert('this alert will run')">
+  <strong>M</strong>
+</div>
+```
+
+* If you click `M` in the strong tag, the onclick handler will run and trigger the alert to run in the browser
+  - But why? Because of bubbling
+* At its core when an event is triggered by an element it will first run its handlers on it (and in our code there weren't any handlers)
+  - then it will run any handlers on its parent
+  - And then it's parents parents
+  - And then it's parents parents parents (you get the idea)
+  - All the way back up the chain (this process is called `bubbling`)
+
+```html
+<div onclick="alert('this alert will not run')">
+  <button conclick="event.stopPropagation()">Click me</button>
+</div>
+```
+
+* The above handler will not run because we shut off bubbling using `event.stopProgagation()`
+
+## DOM
+### `matches()`
+* There's a catch-all method called `matches()` that was created specifically for checking if an element matches certain criteria
+* The `matches()` method is similar to using the `querySelector()` method, but it doesn't find and return an element
+  - Instead, it returns `true` if the element would be returned by a `querySelector()` with the same argument, and it returns `false` if it wouldn't
